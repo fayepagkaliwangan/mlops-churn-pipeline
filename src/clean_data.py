@@ -8,7 +8,7 @@ This script prepares the dataset for machine learning by:
 """
 
 # Import libraries
-import pandas as pandas_library
+import pandas as pd
 import os
 
 
@@ -24,7 +24,7 @@ def load_raw_dataset():
 
     print("Loading raw dataset...")
 
-    dataset_dataframe = pandas_library.read_csv(raw_dataset_path)
+    dataset_dataframe = pd.read_csv(raw_dataset_path)
 
     return dataset_dataframe
 
@@ -37,7 +37,7 @@ def clean_dataset(dataset_dataframe):
     print("Cleaning dataset...")
 
     # Convert TotalCharges to numeric
-    dataset_dataframe["TotalCharges"] = pandas_library.to_numeric(
+    dataset_dataframe["TotalCharges"] = pd.to_numeric(
         dataset_dataframe["TotalCharges"], errors="coerce"
     )
 

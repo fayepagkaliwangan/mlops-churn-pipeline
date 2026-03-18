@@ -8,7 +8,7 @@ This script prepares machine learning features by:
 """
 
 # Import libraries
-import pandas as pandas_library
+import pandas as pd
 import os
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 
@@ -22,7 +22,7 @@ def load_clean_dataset():
 
     print("Loading cleaned dataset...")
 
-    dataset_dataframe = pandas_library.read_csv(clean_dataset_path)
+    dataset_dataframe = pd.read_csv(clean_dataset_path)
 
     return dataset_dataframe
 

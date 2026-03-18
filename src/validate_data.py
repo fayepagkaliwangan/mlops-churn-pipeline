@@ -10,7 +10,7 @@ It generates a validation report in logs/validation_report.txt
 """
 
 # Import required libraries
-import pandas as pandas_library
+import pandas as pd
 import os
 
 
@@ -26,7 +26,7 @@ def load_dataset():
 
     print("Loading dataset...")
 
-    dataset_dataframe = pandas_library.read_csv(raw_dataset_path)
+    dataset_dataframe = pd.read_csv(raw_dataset_path)
 
     return dataset_dataframe
 
