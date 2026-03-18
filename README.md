@@ -4,7 +4,7 @@ End-to-end MLOps pipeline for telecom customer churn prediction
 ## System Architecture
 
 Data flows through the following pipeline:
-
+```
 Raw Dataset (Kaggle)
       ↓
 Data Ingestion
@@ -20,8 +20,9 @@ Model Training
 Model Evaluation
       ↓
 API Deployment
-
+```
 ## Project Structure
+```
 mlops-churn-pipeline
 │
 ├── data
@@ -46,7 +47,7 @@ mlops-churn-pipeline
 ├── logs
 ├── docker
 └── .github/workflows
-
+```
 ## Data Engineering Pipeline
 
 The data engineering stage prepares the dataset for machine learning.
