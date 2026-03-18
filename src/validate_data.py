@@ -4,7 +4,6 @@ Data validation script
 This script checks the raw dataset for common issues:
 - missing values
 - duplicate rows
-- incorrect data types
 
 It generates a validation report in logs/validation_report.txt
 """
