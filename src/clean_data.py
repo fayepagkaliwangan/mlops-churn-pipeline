@@ -24,12 +24,12 @@ def load_raw_dataset():
 
     print("Loading raw dataset...")
 
-    dataset_df = pd.read_csv(raw_dataset_path)
+    dataset_dataframe = pd.read_csv(raw_dataset_path)
 
-    return dataset_df
+    return dataset_dataframe
 
 
-def clean_dataset(dataset_df):
+def clean_dataset(dataset_dataframe):
     """
     Perform data cleaning operations
     """
@@ -37,23 +37,23 @@ def clean_dataset(dataset_df):
     print("Cleaning dataset...")
 
     # Convert TotalCharges to numeric
-    dataset_df["TotalCharges"] = pd.to_numeric(
-        dataset_df["TotalCharges"], errors="coerce"
+    dataset_dataframe["TotalCharges"] = pd.to_numeric(
+        dataset_dataframe["TotalCharges"], errors="coerce"
     )
 
     # Remove rows with missing values
-    before_shape = dataset_df.shape
-    dataset_df = dataset_df.dropna()
-    after_shape = dataset_df.shape
+    before_shape = dataset_dataframe.shape
+    dataset_dataframe = dataset_dataframe.dropna()
+    after_shape = dataset_dataframe.shape
     print(f"Dropped {before_shape[0] - after_shape[0]} rows due to missing values")
 
     # Drop customerID because it is not useful for ML
-    dataset_df = dataset_df.drop(columns=["customerID"])
+    dataset_dataframe = dataset_dataframe.drop(columns=["customerID"])
 
-    return dataset_df
+    return dataset_dataframe
 
 
-def save_clean_dataset(dataset_df):
+def save_clean_dataset(dataset_dataframe):
     """
     Save cleaned dataset
     """
@@ -62,16 +62,16 @@ def save_clean_dataset(dataset_df):
 
     os.makedirs("data/processed", exist_ok=True)
 
-    dataset_df.to_csv(clean_dataset_output_path, index=False)
+    dataset_dataframe.to_csv(clean_dataset_output_path, index=False)
 
     print("Clean dataset saved to:", clean_dataset_output_path)
 
 
 def run_cleaning_pipeline():
 
-    dataset_df = load_raw_dataset()
+    dataset_dataframe = load_raw_dataset()
 
-    cleaned_dataset = clean_dataset(dataset_df)
+    cleaned_dataset = clean_dataset(dataset_dataframe)
 
     save_clean_dataset(cleaned_dataset)
 
