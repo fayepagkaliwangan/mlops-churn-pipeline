@@ -31,14 +31,11 @@ def encode_categorical_columns(dataset_dataframe):
 
     print("Encoding categorical columns...")
 
-    label_encoder = LabelEncoder()
-
     categorical_columns = dataset_dataframe.select_dtypes(include=["object"]).columns
 
     for column_name in categorical_columns:
-        dataset_dataframe[column_name] = label_encoder.fit_transform(
-            dataset_dataframe[column_name]
-        )
+        encoder = LabelEncoder()
+        dataset_dataframe[column_name] = encoder.fit_transform(dataset_dataframe[column_name])
 
     return dataset_dataframe
 
