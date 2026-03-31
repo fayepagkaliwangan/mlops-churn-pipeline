@@ -42,7 +42,10 @@ def clean_dataset(dataset_dataframe):
     )
 
     # Remove rows with missing values
+    before_shape = dataset_dataframe.shape
     dataset_dataframe = dataset_dataframe.dropna()
+    after_shape = dataset_dataframe.shape
+    print(f"Dropped {before_shape[0] - after_shape[0]} rows due to missing values")
 
     # Drop customerID because it is not useful for ML
     dataset_dataframe = dataset_dataframe.drop(columns=["customerID"])
