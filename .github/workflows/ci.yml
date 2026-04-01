@@ -23,7 +23,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install pytest mlflow
         # TODO: Uncomment the line below once the team pins dependencies in requirements.txt
-        # pip install -r requirements.txt
+        pip install -r requirements.txt
 
     - name: Run Pytest
       run: |
