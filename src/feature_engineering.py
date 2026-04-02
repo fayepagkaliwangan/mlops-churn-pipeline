@@ -10,7 +10,7 @@ This script prepares machine learning features by:
 # Import libraries
 import pandas as pd
 import os
-from sklearn.preprocessing import LabelEncoder, StandardScaler
+from sklearn.preprocessing import OrdinalEncoder, StandardScaler
 
 
 # File paths
@@ -31,14 +31,17 @@ def encode_categorical_columns(dataset_dataframe):
 
     print("Encoding categorical columns...")
 
-    label_encoder = LabelEncoder()
-
     categorical_columns = dataset_dataframe.select_dtypes(include=["object"]).columns
 
-    for column_name in categorical_columns:
-        dataset_dataframe[column_name] = label_encoder.fit_transform(
-            dataset_dataframe[column_name]
-        )
+    # Remove churn columns if present
+    if "Churn" in categorical_columns:
+        categorical_columns = categorical_columns.drop("Churn")
+    
+    encoder = OrdinalEncoder()
+
+    dataset_dataframe[categorical_columns] = encoder.fit_transform(
+        dataset_dataframe[categorical_columns]
+    )
 
     return dataset_dataframe
 
@@ -50,11 +53,15 @@ def normalize_numeric_columns(dataset_dataframe):
     scaler = StandardScaler()
 
     numeric_columns = dataset_dataframe.select_dtypes(include=["int64", "float64"]).columns
-
+    
+    # Remove churn columns if present
+    if "Churn" in numeric_columns:
+        numeric_columns = numeric_columns.drop("Churn")
+    
     dataset_dataframe[numeric_columns] = scaler.fit_transform(
         dataset_dataframe[numeric_columns]
     )
-
+    
     return dataset_dataframe
 
 
