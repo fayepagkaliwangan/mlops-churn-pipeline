@@ -6,7 +6,7 @@ import mlflow
 import mlflow.sklearn
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score, precision_score
+from sklearn.metrics import accuracy_score, precision_score, f1_score
 
 # Import centralized MLflow setup
 from src.mlflow_tracking import setup_mlflow_experiment
@@ -45,7 +45,6 @@ class MockRuleBasedModel:
 
 # defining paths
 DATA_PATH = "data/splits/"
-MODEL_PATH = "models/model.pkl"
 
 
 # load data
@@ -70,13 +69,14 @@ def train_and_evaluate(model, X_train, X_test, y_train, y_test):
 
     accuracy = accuracy_score(y_test, preds)
     precision = precision_score(y_test, preds, zero_division=0)
+    f1 = f1_score(y_test, preds, zero_division=0)
 
-    return model, accuracy, precision
+    return model, accuracy, precision, f1
 
 
 
 # main training pipeline
-def train():
+def train_and_select_model():
     setup_mlflow_experiment()
     X_train, X_test, y_train, y_test = load_data()
     # if new models are to be added, add it to the models dictionary
@@ -89,11 +89,11 @@ def train():
 
     best_model = None
     best_model_name = None
-    best_score = 0
+    best_score = -1
 
     for model_name, model in models.items():
         with mlflow.start_run(run_name=model_name):
-            trained_model, accuracy, precision = train_and_evaluate(model, X_train, X_test, y_train, y_test)
+            trained_model, accuracy, precision, f1 = train_and_evaluate(model, X_train, X_test, y_train, y_test)
 
             # log parameters
             mlflow.log_param("model_name", model_name)
@@ -105,8 +105,12 @@ def train():
             # log metrics
             mlflow.log_metric("accuracy", accuracy)
             mlflow.log_metric("precision", precision)
+            mlflow.log_metric("f1_score", f1)
 
-            print(f"{model_name} ---- Accuracy: {accuracy:.4f}, Precision: {precision:.4f}")
+            # log model to MLflow
+            mlflow.sklearn.log_model(trained_model, name="model")
+
+            print(f"{model_name} ---- Accuracy: {accuracy:.4f}, Precision: {precision:.4f}, F1: {f1:.4f}")
 
             # select best model
             if accuracy > best_score:
@@ -121,11 +125,12 @@ def train():
 # save model
 def save_model(model, model_name):
     os.makedirs("models", exist_ok=True)
-    joblib.dump(model, MODEL_PATH)
-    print(f"Best model ({model_name}) saved to {MODEL_PATH}")
+    model_path = f"models/{model_name}_model.pkl"
+    joblib.dump(model, model_path)
+    print(f"Best model ({model_name}) saved to {model_path}")
 
 
 
 if __name__ == "__main__":
-    best_model, best_model_name = train()
+    best_model, best_model_name = train_and_select_model()
     save_model(best_model, best_model_name)
