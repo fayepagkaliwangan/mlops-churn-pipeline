@@ -213,3 +213,5 @@ __marimo__/
 mlruns/
 models/
 logs/mlflow.db
+#Data files
+*.csv
