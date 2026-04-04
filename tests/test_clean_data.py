@@ -2,11 +2,12 @@
 
 import os
 import pandas as pd
+import pytest
 
 
 CLEAN_DATA_PATH = os.path.join("data", "processed", "clean_data.csv")
 
-
+@pytest.mark.skip(reason="Data not on GitHub. Waiting to inject Kaggle Secrets into CI.")
 class TestCleanDataQuality:
     # Verify that cleaning steps were applied correctly.
 
