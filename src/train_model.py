@@ -88,6 +88,7 @@ def train():
     }
 
     best_model = None
+    best_model_name = None
     best_score = 0
 
     for model_name, model in models.items():
@@ -111,19 +112,20 @@ def train():
             if accuracy > best_score:
                 best_score = accuracy
                 best_model = trained_model
+                best_model_name = model_name
 
-    return best_model
+    return best_model, best_model_name
 
 
 
 # save model
-def save_model(model):
+def save_model(model, model_name):
     os.makedirs("models", exist_ok=True)
     joblib.dump(model, MODEL_PATH)
-    print(f"Best model saved to {MODEL_PATH}")
+    print(f"Best model ({model_name}) saved to {MODEL_PATH}")
 
 
 
 if __name__ == "__main__":
-    best_model = train()
-    save_model(best_model)
+    best_model, best_model_name = train()
+    save_model(best_model, best_model_name)
