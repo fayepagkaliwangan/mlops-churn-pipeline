@@ -215,3 +215,10 @@ models/
 logs/mlflow.db
 #Data files
 *.csv
+
+#from the API, we want to ignore the model file and logs
+models/
+*.pkl
+logs/
+mlruns/
+*.db
