@@ -27,6 +27,15 @@ jobs:
       - name: Pull Data with DVC
         run: dvc pull
 
+      - name: Download Raw Data from Kaggle
+        env:
+          KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+          KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+        run: python src/ingest_data.py
+
+      - name: Process and Clean Data
+        run: python src/clean_data.py
+        
       - name: Run Pytest
         run: |
           pytest -v
