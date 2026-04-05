@@ -50,8 +50,8 @@ jobs:
         run: |
           pytest -v
 
-      - name: Save Model as Artifact
+      - name: Save ML Assets as Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: trained-churn-model
-          path: models/model.pkl
+          name: production-ml-assets
+          path: models/
