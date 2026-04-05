@@ -10,6 +10,7 @@ This script prepares machine learning features by:
 # Import libraries
 import pandas as pd
 import os
+import joblib
 from sklearn.preprocessing import OrdinalEncoder, StandardScaler
 
 
@@ -43,7 +44,7 @@ def encode_categorical_columns(dataset_dataframe):
         dataset_dataframe[categorical_columns]
     )
 
-    return dataset_dataframe
+    return dataset_dataframe, encoder
 
 
 def normalize_numeric_columns(dataset_dataframe):
@@ -62,7 +63,7 @@ def normalize_numeric_columns(dataset_dataframe):
         dataset_dataframe[numeric_columns]
     )
     
-    return dataset_dataframe
+    return dataset_dataframe, scaler
 
 
 def save_features(dataset_dataframe):
@@ -80,12 +81,16 @@ def run_feature_engineering_pipeline():
 
     dataset_dataframe = load_clean_dataset()
 
-    dataset_dataframe = encode_categorical_columns(dataset_dataframe)
+    dataset_dataframe, encoder = encode_categorical_columns(dataset_dataframe)
 
-    dataset_dataframe = normalize_numeric_columns(dataset_dataframe)
+    dataset_dataframe, scaler = normalize_numeric_columns(dataset_dataframe)
 
     save_features(dataset_dataframe)
 
+    os.makedirs("models", exist_ok=True)
+    joblib.dump(encoder, "models/encoder.pkl")
+    joblib.dump(scaler, "models/scaler.pkl")
+    print("Encoder and Scaler are saved to models/ folder")
 
 if __name__ == "__main__":
     run_feature_engineering_pipeline()
