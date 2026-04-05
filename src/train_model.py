@@ -131,9 +131,10 @@ def save_model(model, model_name):
         encoder = joblib.load("models/encoder.pkl")
         scaler = joblib.load("models/scaler.pkl")
         print("Encoder and Scaler loaded successfully.")
+        print(f"Best model ({model_name}) saved to {model_path}")
     except FileNotFoundError:
         print("Encoder or Scaler not found.")
-    print(f"Best model ({model_name}) saved to {model_path}")
+    
 
 
 
