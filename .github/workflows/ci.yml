@@ -9,6 +9,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:                      
+      PYTHONPATH: .
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -21,11 +23,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pytest mlflow dvc kaggle pandas
           pip install -r requirements.txt
-
-      - name: Pull Data with DVC
-        run: dvc pull
 
       - name: Download Raw Data from Kaggle
         env:
@@ -36,6 +34,24 @@ jobs:
       - name: Process and Clean Data
         run: python src/clean_data.py
 
+      - name: Validate Data
+        run: python src/validate_data.py
+        
+      - name: Feature Engineering
+        run: python src/feature_engineering.py
+        
+      - name: Split Data
+        run: python src/split_data.py
+
+      - name: Train and Evaluate ML Model
+        run: python src/train_model.py
+
       - name: Run Pytest
         run: |
           pytest -v
+
+      - name: Save Model as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: trained-churn-model
+          path: models/model.pkl
