@@ -6,8 +6,9 @@ from pydantic import BaseModel
 app = FastAPI()
 
 #load the correct trained model
-model = joblib.load("models/RandomForest_model.pkl")
-print(f"Loaded model: {type(model)}")
+model_path = "models/model.pkl"
+model = joblib.load(model_path)
+print(f"Loaded model from {model_path}")
 
 class CustomerInput(BaseModel):
     gender: str
@@ -37,7 +38,7 @@ def health():
 @app.post("/predict")
 def predict(data: CustomerInput):
     try:
-        df = pd.DataFrame([data.dict()])
+        df = pd.DataFrame([data.model_dump()])
         df = pd.get_dummies(df)
         df = df.reindex(columns=model.feature_names_in_, fill_value=0)
 
