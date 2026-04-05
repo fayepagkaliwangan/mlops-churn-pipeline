@@ -125,7 +125,7 @@ def train_and_select_model():
 # save model
 def save_model(model, model_name):
     os.makedirs("models", exist_ok=True)
-    model_path = f"models/{model_name}_model.pkl"
+    model_path = f"models/model.pkl"
     joblib.dump(model, model_path)
     print(f"Best model ({model_name}) saved to {model_path}")
 
