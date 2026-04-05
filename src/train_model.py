@@ -122,12 +122,19 @@ def train_and_select_model():
 
 
 
-# save model
+# save model  and encoder and scaler 
 def save_model(model, model_name):
     os.makedirs("models", exist_ok=True)
     model_path = f"models/model.pkl"
     joblib.dump(model, model_path)
-    print(f"Best model ({model_name}) saved to {model_path}")
+    try:
+        encoder = joblib.load("models/encoder.pkl")
+        scaler = joblib.load("models/scaler.pkl")
+        print("Encoder and Scaler loaded successfully.")
+        print(f"Best model ({model_name}) saved to {model_path}")
+    except FileNotFoundError:
+        print("Encoder or Scaler not found.")
+    
 
 
 
