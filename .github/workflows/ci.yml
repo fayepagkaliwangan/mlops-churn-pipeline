@@ -55,3 +55,25 @@ jobs:
         with:
           name: production-ml-assets
           path: models/
+
+      # --- CONTINUOUS DEPLOYMENT (DOCKER & K8S) ---
+      - name: Log in to Docker Hub
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and Push Docker Image
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/churn-api:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/churn-api:latest
+
+      - name: Simulated Deployment (Local Cluster)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          echo "Simulating K8s deployment for development environment..."
+          echo "In a production cloud environment, we would run: kubectl apply -f k8s/ && kubectl rollout restart deployment <deployment-name>"
+          echo "Kubernetes configs present in repository:"
+          ls k8s/
