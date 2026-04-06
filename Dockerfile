@@ -1,0 +1,21 @@
+FROM python:3.10-slim
+
+WORKDIR /app
+
+RUN useradd -m appuser
+
+COPY requirements.txt .
+
+RUN grep -viE 'pytest' requirements.txt > req-prod.txt && \
+    pip install --no-cache-dir -r req-prod.txt && \
+    rm req-prod.txt
+
+COPY api/ ./api/
+COPY models/ ./models/
+
+RUN chown -R appuser /app
+USER appuser
+
+EXPOSE 8000
+
+CMD ["uvicorn", "api.app:app", "--host", "0.0.0.0", "--port", "8000"]

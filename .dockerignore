@@ -1,0 +1,20 @@
+# Git and environments
+.git
+.gitignore
+venv/
+_pycache_/
+*.pyc
+
+#data (avoiding raw data in the API container)
+data/
+
+# Tests
+tests/
+.pytest_cache/
+
+# CI/CD
+.github/
+
+# Local MLflow tracking
+mlruns/
+*.db
