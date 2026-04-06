@@ -4,11 +4,9 @@ WORKDIR /app
 
 RUN useradd -m appuser
 
-COPY requirements.txt .
+COPY requirements.txt .  
 
-RUN grep -viE 'pytest' requirements.txt > req-prod.txt && \
-    pip install --no-cache-dir -r req-prod.txt && \
-    rm req-prod.txt
+RUN pip install --no-cache-dir -r requirements.txt  
 
 COPY api/ ./api/
 COPY models/ ./models/
