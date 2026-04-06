@@ -13,6 +13,39 @@ The end-to-end pipeline predicts customer churn for a telecommunications provide
 
 ---
 
+## Why this matters
+
+Customer churn directly impacts revenue. Being able to predict churn allows teams to:
+- target high-risk customers
+- improve retention strategies
+- make better business decisions
+
+This project shows how such a system can be built and maintained in practice.
+
+---
+
+## What the system does
+
+At a high level:
+
+- Takes customer data as input  
+- Processes and prepares features  
+- Trains and evaluates multiple models  
+- Deploys the best model as an API  
+- Returns:
+  - churn prediction (Churn / No Churn)
+  - churn probability  
+
+---
+
+## System Flow (Simple View)
+
+Data flows through the following pipeline:
+
+![System Diagram](docs/system_flow.jpg)
+
+---
+
 ## Tech Stack 
 
 | Layer | Tech |
@@ -25,40 +58,6 @@ The end-to-end pipeline predicts customer churn for a telecommunications provide
 | CI/CD | GitHub Actions |
 | Cloud Deployment | Render (free tier) |
 | Testing | pytest |
-
----
-
-## System Architecture
-
-Data flows through the following pipeline:
-
-```
-Raw Dataset (Kaggle)
-        │
-        ▼
-  Data Ingestion          ← ingest_data.py      (Kaggle API download)
-        │
-        ▼
-  Data Validation         ← validate_data.py    (missing values, duplicates)
-        │
-        ▼
-  Data Cleaning           ← clean_data.py       (type coercion, invalid rows)
-        │
-        ▼
-Feature Engineering       ← feature_engineering.py  (encoding, normalisation)
-        │
-        ▼
-   Train / Test Split     ← split_data.py
-        │
-        ▼
-  Model Training          ← train_model.py      (MLflow experiment tracking)
-        │
-        ▼
-  Model Evaluation        ← best model selected by accuracy, saved to models/
-        │
-        ▼
-  API Deployment          ← FastAPI  →  Docker  →  Render
-```
 
 ---
 
