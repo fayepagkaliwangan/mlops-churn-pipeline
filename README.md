@@ -42,7 +42,7 @@ At a high level:
 
 Data flows through the following pipeline:
 
-![System Diagram](docs/system_flow.jpg)
+![System Diagram](docs/system_flow.png)
 
 ---
 
