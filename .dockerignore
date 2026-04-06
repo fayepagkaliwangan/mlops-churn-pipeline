@@ -2,7 +2,7 @@
 .git
 .gitignore
 venv/
-_pycache_/
+__pycache__/
 *.pyc
 
 #data (avoiding raw data in the API container)
