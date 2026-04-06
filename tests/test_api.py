@@ -47,7 +47,7 @@ def valid_payload():
 class TestHealthEndpoint:
     def test_health_returns_ok(self):
         """Verify the API is online and responding to basic GET requests."""
-        response = client.get("/")
+        response = client.get("/health")
         assert response.status_code == 200
         assert response.json() == {"status": "ok"}
 
