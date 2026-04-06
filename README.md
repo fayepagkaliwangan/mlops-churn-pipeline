@@ -42,7 +42,8 @@ At a high level:
 
 Data flows through the following pipeline:
 
-![System Diagram](https://raw.githubusercontent.com/fayepagkaliwangan/mlops-churn-pipeline/feature-readme-update/docs/system_flow.png)
+![System Diagram](docs/system_flow.png)
+
 ---
 
 ## Tech Stack 
