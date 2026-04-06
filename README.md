@@ -20,7 +20,6 @@ The end-to-end pipeline predicts customer churn for a telecommunications provide
 | API Framework | FastAPI + Uvicorn |
 | ML & Data | scikit-learn, pandas, numpy |
 | Experiment Tracking | MLflow (SQLite backend) |
-| Data Versioning | DVC |
 | Containerisation | Docker |
 | Orchestration (local) | Kubernetes (kubectl + k8s manifests) |
 | CI/CD | GitHub Actions |
@@ -81,7 +80,7 @@ mlops-churn-pipeline/
 │   └── app.py                  # FastAPI app with /health and /predict endpoints
 │
 ├── data/
-│   ├── raw/                    # Raw CSV (tracked by DVC)
+│   ├── raw/                    # Raw CSV 
 │   ├── processed/              # Cleaned data
 │   ├── features/               # Engineered feature set
 │   └── splits/                 # X_train, X_test, y_train, y_test CSVs
@@ -109,7 +108,6 @@ mlops-churn-pipeline/
 │
 ├── Dockerfile
 ├── .dockerignore
-├── .dvc/                       # DVC configuration
 ├── requirements.txt
 └── README.md
 ```
