@@ -80,7 +80,7 @@ mlops-churn-pipeline/
 │   └── app.py                  # FastAPI app with /health and /predict endpoints
 │
 ├── data/
-│   ├── raw/                    # Raw CSV 
+│   ├── raw/                    # Raw CSV
 │   ├── processed/              # Cleaned data
 │   ├── features/               # Engineered feature set
 │   └── splits/                 # X_train, X_test, y_train, y_test CSVs
