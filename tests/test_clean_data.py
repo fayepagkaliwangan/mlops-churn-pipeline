@@ -20,9 +20,7 @@ class TestCleanDataQuality:
 
     def test_total_charges_is_numeric(self):
         df = pd.read_csv(CLEAN_DATA_PATH)
-        assert df["TotalCharges"].dtype in ["float64", "int64"], (
-            "TotalCharges should be numeric after cleaning"
-        )
+        assert df["TotalCharges"].dtype in ["float64", "int64"], "TotalCharges should be numeric after cleaning"
 
     def test_churn_column_exists(self):
         df = pd.read_csv(CLEAN_DATA_PATH)
