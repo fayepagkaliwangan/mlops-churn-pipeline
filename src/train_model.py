@@ -122,7 +122,7 @@ def train_and_select_model():
 
 
 
-# save model  and encoder and scaler 
+# save model check if encoder and scaler exixts 
 def save_model(model, model_name):
     os.makedirs("models", exist_ok=True)
     model_path = f"models/model.pkl"
