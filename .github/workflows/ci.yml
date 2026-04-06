@@ -68,14 +68,9 @@ jobs:
           docker build -t ${{ secrets.DOCKER_USERNAME }}/churn-api:latest .
           docker push ${{ secrets.DOCKER_USERNAME }}/churn-api:latest
 
-      - name: Set up Kubernetes config
-        uses: azure/k8s-set-context@v3
-        with:
-          method: kubeconfig
-          kubeconfig: ${{ secrets.KUBECONFIG }}
-
-      - name: Deploy to Kubernetes
+      - name: Simulated Deployment (Local Cluster)
         run: |
-          kubectl apply -f k8s/
-          # Force K8s to pull the brand new image you just built
-          kubectl rollout restart deployment churn-api-deployment
+          echo "Simulating K8s deployment for development environment..."
+          echo "In a production cloud environment, we would run: kubectl apply -f k8s/ && kubectl rollout restart deployment <deployment-name>"
+          echo "Kubernetes configs present in repository:"
+          ls k8s/
